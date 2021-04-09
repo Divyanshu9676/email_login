@@ -77,7 +77,8 @@ class _SignUpState extends State<SignUp> {
                 )),
             ElevatedButton(
                 child: Text("Create Account", style: TextStyle(color: Colors.black),),
-                onPressed: () {addData(name.text, hobbies.text,emal.text);}
+                onPressed: () {signUp(emal.text, passrd.text, context);
+                  addData(name.text, hobbies.text,emal.text);}
             ),
           ],
         ),

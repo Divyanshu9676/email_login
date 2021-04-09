@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:email/main.dart';
 
 class About extends StatefulWidget {
   var value;
@@ -11,6 +13,14 @@ class About extends StatefulWidget {
 class _AboutState extends State<About> {
   _AboutState(this.email);
   String email;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  void signOut() async {
+    await auth.signOut();
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MyApp()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,20 +36,20 @@ class _AboutState extends State<About> {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
-                      shrinkWrap: true, //unlimited data
+                      shrinkWrap: true,
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (context, index) {
-                        DocumentSnapshot documentSnapshot =
+                        DocumentSnapshot snap =
                         snapshot.data.docs[index];
-                        return Column(
+                        return Row(
                           children: <Widget>[
                             Expanded(
-                              child: Text("Name:"+documentSnapshot["Name"]),
+                              child: Text("Name: "+snap["Name"]+"\n", style: TextStyle(fontSize: 20),),
                             ),
                             Expanded(
-                              child: Text("Hobbies:"+documentSnapshot["Hobbies"]),
+                              child: Text("Hobbies: "+snap["Hobbies"], style: TextStyle(fontSize: 20),),
                             ),
-                          ],
+                        ],
                         );
                       });
                 } else {
@@ -49,7 +59,7 @@ class _AboutState extends State<About> {
             ),
             ElevatedButton(
                 child: Text("SignOut", style: TextStyle(color: Colors.black),),
-                onPressed: () {}
+                onPressed: () {signOut();}
             ),
           ],
         ),
