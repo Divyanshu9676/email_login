@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email/main.dart';
 
+// ignore: must_be_immutable
 class About extends StatefulWidget {
   var value;
   About({@required this.value});
@@ -44,12 +45,18 @@ class _AboutState extends State<About> {
                         return Row(
                           children: <Widget>[
                             Expanded(
-                              child: Text("Name: "+snap["Name"]+"\n", style: TextStyle(fontSize: 20),),
+                              child: Text("Name: "+snap["Name"], style: TextStyle(fontSize: 20),),
                             ),
                             Expanded(
                               child: Text("Hobbies: "+snap["Hobbies"], style: TextStyle(fontSize: 20),),
                             ),
-                        ],
+                            Expanded(
+                              child: Text("Latitude: "+snap["Latitude"], style: TextStyle(fontSize: 20),),
+                            ),
+                            Expanded(
+                              child: Text("Longitude: "+snap["Longitude"], style: TextStyle(fontSize: 20),),
+                            ),
+                          ],
                         );
                       });
                 } else {
